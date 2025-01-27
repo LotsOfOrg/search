@@ -58,10 +58,86 @@ package manager specific guidelines on
 
 ## How to use
 
-Fill me in please! Don’t forget code examples:
+### Basic Usage
 
 ``` python
-1+1
+from search.core import Document, Query, SearchResult
+
+# Create a document
+doc = Document(
+    id="example-1",
+    content="This is an example document about personal search",
+    metadata={"type": "tutorial"},
+    source="documentation"
+)
+
+# Create a search query
+query = Query(
+    text="personal search",
+    filters={"type": "tutorial"},
+    boost={"title": 2.0}  # Boost matches in title fields
+)
 ```
 
-    2
+### Creating Custom Indexes
+
+THe library provides a flexible base
+[`Index`](https://LotsOfOrg.github.io/search/core.html#index) class that
+you can extend for different search needs:
+
+``` python
+from search.core import Index
+
+class MyCustomIndex(Index):
+    def add(self, doc):
+        # Implementation for adding documents
+        pass
+    
+    def search(self, query):
+        # Implementation for searching
+        pass
+```
+
+## Features
+
+### Multiple Search Types
+
+- Full-text search for documents and notes
+- Vector search for semantic similarity
+- Metadata search for file properties and tags
+- Structured data search for databases and APIs
+
+### Customizable Ranking
+
+- Downrank or blacklist unwanted sources
+- Boost preferred sites and sources
+- Context-aware result prioritization
+
+### Private Data Support
+
+- Search authentication-protected content
+- Index personal data stores
+- Maintain privacy of sensitive information
+
+## Documentation
+
+For more detailed information, visit our documentation site.
+
+The library includes several key components:
+
+1.  [`Document`](https://LotsOfOrg.github.io/search/core.html#document):
+    Represents searchable content with metadata
+2.  [`Query`](https://LotsOfOrg.github.io/search/core.html#query):
+    Defines search parameters and filters
+3.  [`SearchResult`](https://LotsOfOrg.github.io/search/core.html#searchresult):
+    Contains search matches with relevance scores
+4.  [`Index`](https://LotsOfOrg.github.io/search/core.html#index): Base
+    class for implementing different search indexes
+
+## Contributing
+
+PRs are welcome! Please make sure to:
+
+1.  Add tests for new functionality
+2.  Update documentation
+3.  Run nbdev_prepare before committing
