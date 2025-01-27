@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "search"
+  site-url: "https://LotsOfOrg.github.io/search"
+  description: "An individual search client"
+  repo-branch: main
+  repo-url: "https://github.com/LotsOfOrg/search"
