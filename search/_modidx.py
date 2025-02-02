@@ -21,4 +21,11 @@ d = { 'settings': { 'branch': 'main',
                              'search.core.SearchResult': ('core.html#searchresult', 'search/core.py'),
                              'search.core.SearchResult.__init__': ('core.html#searchresult.__init__', 'search/core.py'),
                              'search.core.SearchResult.__repr__': ('core.html#searchresult.__repr__', 'search/core.py'),
-                             'search.core.SearchResult.best_highlight': ('core.html#searchresult.best_highlight', 'search/core.py')}}}
+                             'search.core.SearchResult.best_highlight': ('core.html#searchresult.best_highlight', 'search/core.py')},
+            'search.index': { 'search.index.InvertedIndex': ('indexes.html#invertedindex', 'search/index.py'),
+                              'search.index.InvertedIndex.__init__': ('indexes.html#invertedindex.__init__', 'search/index.py'),
+                              'search.index.InvertedIndex._tokenize': ('indexes.html#invertedindex._tokenize', 'search/index.py'),
+                              'search.index.InvertedIndex.add': ('indexes.html#invertedindex.add', 'search/index.py'),
+                              'search.index.InvertedIndex.clear': ('indexes.html#invertedindex.clear', 'search/index.py'),
+                              'search.index.InvertedIndex.remove': ('indexes.html#invertedindex.remove', 'search/index.py'),
+                              'search.index.InvertedIndex.search': ('indexes.html#invertedindex.search', 'search/index.py')}}}
