@@ -1,0 +1,92 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Customizable Search",
+    "section": "",
+    "text": "This library provides tools to create and manage customizable search indexes across a variety of data, including: - Local documents and files - Internal documentation - Specific websites you care about - Custom data sources requiring authentication",
+    "crumbs": [
+      "Customizable Search"
+    ]
+  },
+  {
+    "objectID": "index.html#developer-guide",
+    "href": "index.html#developer-guide",
+    "title": "Customizable Search",
+    "section": "Developer Guide",
+    "text": "Developer Guide\nIf you are new to using nbdev here are some useful pointers to get you started.\n\nInstall search in Development mode\n# make sure search package is installed in development mode\n$ pip install -e .\n\n# make changes under nbs/ directory\n# ...\n\n# compile to have changes apply to search\n$ nbdev_prepare",
+    "crumbs": [
+      "Customizable Search"
+    ]
+  },
+  {
+    "objectID": "index.html#usage",
+    "href": "index.html#usage",
+    "title": "Customizable Search",
+    "section": "Usage",
+    "text": "Usage\n\nInstallation\nInstall latest from the GitHub repository:\n$ pip install git+https://github.com/LotsOfOrg/search.git\nor from conda\n$ conda install -c LotsOfOrg search\nor from pypi\n$ pip install search\n\n\nDocumentation\nDocumentation can be found hosted on this GitHub repository’s pages. Additionally you can find package manager specific guidelines on conda and pypi respectively.",
+    "crumbs": [
+      "Customizable Search"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-use",
+    "href": "index.html#how-to-use",
+    "title": "Customizable Search",
+    "section": "How to use",
+    "text": "How to use\n\nBasic Usage\n\nfrom search.core import Document, Query, SearchResult\n\n# Create a document\ndoc = Document(\n    id=\"example-1\",\n    content=\"This is an example document about personal search\",\n    metadata={\"type\": \"tutorial\"},\n    source=\"documentation\"\n)\n\n# Create a search query\nquery = Query(\n    text=\"personal search\",\n    filters={\"type\": \"tutorial\"},\n    boost={\"title\": 2.0}  # Boost matches in title fields\n)\n\n\n\nCreating Custom Indexes\nTHe library provides a flexible base Index class that you can extend for different search needs:\n\nfrom search.core import Index\n\nclass MyCustomIndex(Index):\n    def add(self, doc):\n        # Implementation for adding documents\n        pass\n    \n    def search(self, query):\n        # Implementation for searching\n        pass",
+    "crumbs": [
+      "Customizable Search"
+    ]
+  },
+  {
+    "objectID": "index.html#features",
+    "href": "index.html#features",
+    "title": "Customizable Search",
+    "section": "Features",
+    "text": "Features\n\nMultiple Search Types\n\nFull-text search for documents and notes\nVector search for semantic similarity\nMetadata search for file properties and tags\nStructured data search for databases and APIs\n\n\n\nCustomizable Ranking\n\nDownrank or blacklist unwanted sources\nBoost preferred sites and sources\nContext-aware result prioritization\n\n\n\nPrivate Data Support\n\nSearch authentication-protected content\nIndex personal data stores\nMaintain privacy of sensitive information",
+    "crumbs": [
+      "Customizable Search"
+    ]
+  },
+  {
+    "objectID": "index.html#documentation-1",
+    "href": "index.html#documentation-1",
+    "title": "Customizable Search",
+    "section": "Documentation",
+    "text": "Documentation\nFor more detailed information, visit our documentation site.\nThe library includes several key components:\n\nDocument: Represents searchable content with metadata\nQuery: Defines search parameters and filters\nSearchResult: Contains search matches with relevance scores\nIndex: Base class for implementing different search indexes",
+    "crumbs": [
+      "Customizable Search"
+    ]
+  },
+  {
+    "objectID": "index.html#contributing",
+    "href": "index.html#contributing",
+    "title": "Customizable Search",
+    "section": "Contributing",
+    "text": "Contributing\nPRs are welcome! Please make sure to:\n\nAdd tests for new functionality\nUpdate documentation\nRun nbdev_prepare before committing",
+    "crumbs": [
+      "Customizable Search"
+    ]
+  },
+  {
+    "objectID": "01_indexes.html",
+    "href": "01_indexes.html",
+    "title": "search",
+    "section": "",
+    "text": "source\n\nInvertedIndex\n\n InvertedIndex ()\n\nBasic inverted index implementation mapping terms to document IDs\n\nidx = InvertedIndex()\n\n\n# Test adding and searching\ndoc1 = Document(\"1\", \"The quick brown fox jumps over the lazy dog\")\ndoc2 = Document(\"2\", \"The lazy fox sleeps\")\nidx.add(doc1)\nidx.add(doc2)\n\nresults = idx.search(Query(\"fox\"))\ntest_eq(len(results), 2)\ntest_eq({r.document.id for r in results}, {\"1\", \"2\"})\n\n\n# Test removal\nidx.remove(\"1\")\nresults = idx.search(Query(\"fox\"))\ntest_eq(len(results), 1)\ntest_eq(results[0].document.id, \"2\")",
+    "crumbs": [
+      "01_indexes.html"
+    ]
+  },
+  {
+    "objectID": "core.html",
+    "href": "core.html",
+    "title": "Core Search Types",
+    "section": "",
+    "text": "This module provides the fundamental building blocks for creating a personal search engine: - Document: Represents any searchable content - SearchResult: Represents a matched document with relevance info - Query: Encapsulates search parameters and preferences - Index: Base class for different indexing strategies\n\nsource\n\nDocument\n\n Document (id:str, content:str, metadata:dict[str,any]=None,\n           created_at:datetime.datetime=None, source:str=None)\n\n*A searchable document with content and metadata\nA Document represents any piece of content that can be indexed and searched. This could be: - A web page - A local file - An email - A note or document*\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nid\nstr\n\nUnique identifier for the document\n\n\ncontent\nstr\n\nThe main content of the document\n\n\nmetadata\ndict\nNone\nFlexible metadata storage\n\n\ncreated_at\ndatetime\nNone\nWhen the document was created\n\n\nsource\nstr\nNone\nWhere this document came from\n\n\n\n\n# Examples of Document usage\ndoc1 = Document(id=\"email_1\", \n                content=\"Meeting scheduled for tomorrow at 2pm\",\n                metadata={\"type\": \"email\", \"from\": \"alice@example.com\"},\n                source=\"outlook\")\ndoc2 = Document(id=\"webpage_1\",\n                content=\"FastAI is a deep learning library\",\n                metadata={\"url\": \"fast.ai\", \"type\": \"webpage\"},\n                source=\"web\")\n\ntest_eq(doc1.metadata[\"type\"], \"email\")\ntest_eq(doc2.source, \"web\")\n\n\nlong_doc = Document(id=\"2\", content=\"x\"*200)\ntest_eq(len(long_doc.summary), 103)  # 100 chars + \"...\"\n\n\nsource\n\n\nSearchResult\n\n SearchResult (document:__main__.Document, score:float,\n               highlights:list[str]=None)\n\n*A document match with relevance information\nSearchResult objects are returned by Index implementations to represent matches, including: - The matched document - A relevance score (higher is better) - Optional highlighted snippets showing match context*\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\ndocument\nDocument\n\nThe document that matched\n\n\nscore\nfloat\n\nRelevance score\n\n\nhighlights\nlist\nNone\nHighlighted snippets from the document\n\n\n\n\n# Example of SearchResult usage\nresult = SearchResult(\n    document=doc1,\n    score=0.85,\n    highlights=[\"Meeting scheduled for tomorrow\", \"2pm\"]\n)\ntest_eq(result.score, 0.85)\ntest_eq(result.best_highlight, \"Meeting scheduled for tomorrow\")\n\n\nsource\n\n\nQuery\n\n Query (text:str, filters:dict[str,any]=None, boost:dict[str,float]=None)\n\n*A search request with filters and preferences\nQuery objects encapsulate all parameters for a search request: - Search text (what to look for) - Filters (metadata constraints) - Boost factors (field importance weights)*\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\ntext\nstr\n\nThe search text\n\n\nfilters\ndict\nNone\nMetadata filters to apply\n\n\nboost\ndict\nNone\nBoost factors for specific fields\n\n\n\n\n# Example of Query usage\nquery = Query(\n    text=\"meeting tomorrow\",\n    filters={\"type\": \"email\"},\n    boost={\"subject\": 2.0, \"content\": 1.0}\n)\ntest_eq(query.text, \"meeting tomorrow\")\ntest_eq(query.filters[\"type\"], \"email\")\n\n\nsource\n\n\nIndex\n\n Index ()\n\n*Base class for all index implementations\nThis abstract base class defines the interface that all index implementations must provide. Implementations might include: - Inverted index for text search - Vector index for semantic search - Graph index for relationship-based search*",
+    "crumbs": [
+      "Core Search Types"
+    ]
+  }
+]
